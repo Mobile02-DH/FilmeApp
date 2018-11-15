@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("digitalhouse.com.filmeapp", appContext.getPackageName());
+        assertEquals("digitalhouse.com.whatchapp", appContext.getPackageName());
     }
 }
