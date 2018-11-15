@@ -1,9 +1,11 @@
-package digitalhouse.com.filmeapp;
+package com.digitalhouse.whatchapp.view;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+
+import com.digitalhouse.whatchapp.R;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -23,7 +25,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     public void jump(View view) {
-        startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+        startActivity(new Intent(SplashActivity.this, MainActivity.class));
         finish();
     }
 
