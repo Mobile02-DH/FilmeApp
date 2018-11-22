@@ -52,9 +52,10 @@ public class MainActivity extends IntroActivity {
 
     public void btn_cadastrar (View view){
         startActivity(new Intent(this, CadastroActivity.class));
-
     }
 
 
-
+    public void goToHome(View view) {
+        startActivity(new Intent(this, HomeActivity.class));
+    }
 }
