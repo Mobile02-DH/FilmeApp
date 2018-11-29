@@ -14,7 +14,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-
         <activity
             android:name=".view.MainActivity"
             android:theme="@style/FullScreen">
@@ -24,20 +23,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".view.CadastroActivity" />
         <activity android:name=".view.LoginActivity" />
-        <activity android:name=".view.HomeActivity"></activity>
-
-        <activity android:name=".view.DetailActivity"
+        <activity android:name=".view.HomeActivity" />
+        <activity
+            android:name=".view.DetailActivity"
             android:label="Movies"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".view.HomeActivity">
-        </activity>
+            android:parentActivityName=".view.HomeActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
             android:value=".view.HomeActivity" />
+
+        <activity android:name=".view.ListaDeAssistidos"></activity>
     </application>
 
 </manifest>
