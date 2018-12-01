@@ -1,11 +1,14 @@
-package com.example.felipetoniolo.filmesapp.model;
+package com.digitalhouse.whatchapp.model;
+
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Movie {
+public class Movie implements Parcelable {
     @SerializedName("poster_path")
     private String posterPath;
     @SerializedName("adult")
@@ -35,7 +38,7 @@ public class Movie {
     @SerializedName("vote_average")
     private Double voteAverage;
 
-    public Movie (String posterPath, boolean adult,String overview, String releaseDate, List<Integer> genreIds, Integer id,
+    public Movie (String posterPath, boolean adult, String overview, String releaseDate, List<Integer> genreIds, Integer id,
                   String originalLanguage, String originalTitle, String title, String backdropPath, Double popularity, Integer voteCount,
                   Boolean video, Double voteAverage) {
         this.posterPath = posterPath;
@@ -54,6 +57,52 @@ public class Movie {
         this.voteAverage = voteAverage;
     }
     String baseImageUrl = "https://image.tmdb.org/t/p/w500";
+
+    protected Movie(Parcel in) {
+        posterPath = in.readString();
+        adult = in.readByte() != 0;
+        overview = in.readString();
+        releaseDate = in.readString();
+        if (in.readByte() == 0) {
+            id = null;
+        } else {
+            id = in.readInt();
+        }
+        originalTitle = in.readString();
+        Language = in.readString();
+        title = in.readString();
+        backdropPath = in.readString();
+        if (in.readByte() == 0) {
+            popularity = null;
+        } else {
+            popularity = in.readDouble();
+        }
+        if (in.readByte() == 0) {
+            voteCount = null;
+        } else {
+            voteCount = in.readInt();
+        }
+        byte tmpVideo = in.readByte();
+        video = tmpVideo == 0 ? null : tmpVideo == 1;
+        if (in.readByte() == 0) {
+            voteAverage = null;
+        } else {
+            voteAverage = in.readDouble();
+        }
+        baseImageUrl = in.readString();
+    }
+
+    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
+        @Override
+        public Movie createFromParcel(Parcel in) {
+            return new Movie(in);
+        }
+
+        @Override
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
 
     public String getPosterPath(){
         return "https://image.tmdb.org/t/p/w500" + posterPath;
@@ -159,5 +208,48 @@ public class Movie {
 
     public void setVoteAverage(Double voteAverage) {
         this.voteAverage = voteAverage;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(posterPath);
+        parcel.writeByte((byte) (adult ? 1 : 0));
+        parcel.writeString(overview);
+        parcel.writeString(releaseDate);
+        if (id == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(id);
+        }
+        parcel.writeString(originalTitle);
+        parcel.writeString(Language);
+        parcel.writeString(title);
+        parcel.writeString(backdropPath);
+        if (popularity == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeDouble(popularity);
+        }
+        if (voteCount == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(voteCount);
+        }
+        parcel.writeByte((byte) (video == null ? 0 : video ? 1 : 2));
+        if (voteAverage == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeDouble(voteAverage);
+        }
+        parcel.writeString(baseImageUrl);
     }
 }

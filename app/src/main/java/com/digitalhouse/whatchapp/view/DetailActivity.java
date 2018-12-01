@@ -1,4 +1,4 @@
-package com.example.felipetoniolo.filmesapp;
+package com.digitalhouse.whatchapp.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.digitalhouse.whatchapp.R;
 import com.squareup.picasso.Picasso;
 
 public class DetailActivity extends AppCompatActivity {

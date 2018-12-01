@@ -1,4 +1,4 @@
-package com.example.felipetoniolo.filmesapp.model;
+package com.digitalhouse.whatchapp.model;
 
 import com.google.gson.annotations.SerializedName;
 

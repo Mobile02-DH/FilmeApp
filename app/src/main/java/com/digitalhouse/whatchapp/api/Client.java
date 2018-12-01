@@ -1,4 +1,4 @@
-package com.example.felipetoniolo.filmesapp.api;
+package com.digitalhouse.whatchapp.api;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
