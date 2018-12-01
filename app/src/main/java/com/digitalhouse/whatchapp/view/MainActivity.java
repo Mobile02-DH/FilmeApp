@@ -33,6 +33,7 @@ public class MainActivity extends IntroActivity {
                 .background(R.color.secondary_text)
                 .backgroundDark(R.color.accent)
                 .fragment(R.layout.intro_3)
+                .canGoForward(false)
                 .build());
 
     }
