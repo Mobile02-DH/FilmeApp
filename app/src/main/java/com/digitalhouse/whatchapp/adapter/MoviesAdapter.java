@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.digitalhouse.whatchapp.R;
 import com.digitalhouse.whatchapp.model.Movie;
 import com.digitalhouse.whatchapp.view.DetailActivity;
+import com.digitalhouse.whatchapp.view.ListaDeAssistidos;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -37,13 +38,9 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
 
     @Override
     public void onBindViewHolder(final MoviesAdapter.MyViewHolder viewHolder, int i) {
-        viewHolder.title.setText(movieList.get(i).getOriginalTitle());
-        String vote = Double.toString(movieList.get(i).getVoteAverage());
-        viewHolder.userrating.setText(vote);
 
-        Picasso.get().load(movieList.get(i).getPosterPath())
-                .placeholder(R.drawable.load)
-                .into(viewHolder.thumbnail);
+        Movie movie = movieList.get(i);
+        viewHolder.bind(movie);
     }
 
     @Override
@@ -52,16 +49,30 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-        public TextView title, userrating;
+        public TextView title;
+        public TextView userrating;
         public ImageView thumbnail;
+        public ImageView imageAssistido;
 
         public MyViewHolder(View view){
             super(view);
             title = view.findViewById(R.id.title);
             userrating = view.findViewById(R.id.userrating);
             thumbnail = view.findViewById(R.id.thumbnail);
+            imageAssistido = view.findViewById(R.id.imageAssistidos);
+        }
 
-            view.setOnClickListener(new View.OnClickListener() {
+        public void bind(final Movie movie){
+
+            Picasso.get().load(movie.getPosterPath())
+                    .placeholder(R.drawable.load)
+                    .into(thumbnail);
+
+            title.setText(movie.getOriginalTitle());
+            String vote = Double.toString(movie.getVoteAverage());
+            userrating.setText(vote);
+
+            this.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int pos = getAdapterPosition();
@@ -77,6 +88,15 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
                         mContext.startActivity(intent);
                         Toast.makeText(v.getContext(), "You clicked" + clickedDataItem.getOriginalTitle(), Toast.LENGTH_SHORT).show();
                     }
+                }
+            });
+
+            imageAssistido.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(view.getContext(),ListaDeAssistidos.class);
+                    intent.putExtra("MOVIE", movie);
+                    view.getContext().startActivity(intent);
                 }
             });
         }
