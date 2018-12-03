@@ -28,7 +28,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
 public class HomeActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private MoviesAdapter adapter;
@@ -36,6 +35,7 @@ public class HomeActivity extends AppCompatActivity {
     ProgressDialog pd;
     private SwipeRefreshLayout swipeContainer;
     public static final String LOG_TAG = MoviesAdapter.class.getName();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,14 +50,14 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onRefresh() {
                 initViews();
-                Toast.makeText(HomeActivity.this, "Movies Refreshed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(HomeActivity.this, "Atualizando Filmes", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void initViews() {
         pd = new ProgressDialog(this);
-        pd.setMessage("Fetching movies...");
+        pd.setMessage("Buscando Filmes...");
         pd.setCancelable(false);
         pd.show();
 

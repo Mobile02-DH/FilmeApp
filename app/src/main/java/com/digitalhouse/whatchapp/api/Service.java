@@ -8,11 +8,12 @@ import retrofit2.http.Query;
 
 public interface Service {
 
-    @GET("movie/popular")
+    @GET("movie/popular?page=1&language=pt-br&")
     Call<MoviesResponse> getPopularMovies(
             @Query("api_key") String apiKey);
 
     @GET("movie/top_rated")
-    Call<MoviesResponse> getTopRatedMovies(@Query("api_key") String apiKey);
+    Call<MoviesResponse> getTopRatedMovies(
+            @Query("api_key") String apiKey);
 
 }
