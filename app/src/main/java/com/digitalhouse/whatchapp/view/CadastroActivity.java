@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class CadastroActivity extends AppCompatActivity {
 
@@ -70,7 +71,17 @@ public class CadastroActivity extends AppCompatActivity {
         });
     }
 
-    public void cadastrarUsuario (){
+    // [START on_start_check_user]
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = ConfiguracaoFirebase.getFirebaseAutenticacao().getCurrentUser();
+        updateUI(currentUser);
+    }
+    // [END on_start_check_user]
+
+    public void cadastrarUsuario(){
 
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         autenticacao.createUserWithEmailAndPassword(
@@ -80,15 +91,28 @@ public class CadastroActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
+                    // Sign in success, update UI with the signed-in user's information
                     Toast.makeText(CadastroActivity.this, "Sucesso ao cadastrar usuário!", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(CadastroActivity.this, MainActivity.class));
+                    FirebaseUser user = ConfiguracaoFirebase.getFirebaseAutenticacao().getCurrentUser();
+                    updateUI(user);
+                    startActivity(new Intent(CadastroActivity.this, LoginActivity.class));
                     finish();
                 }else {
                     Toast.makeText(CadastroActivity.this, "Erro ao cadastrar usuário!", Toast.LENGTH_SHORT).show();
+                    updateUI(null);
 
                 }
             }
         });
 
     }
+
+    public void updateUI(FirebaseUser user) {
+        if (user != null) {
+            Toast.makeText(this, "Você não esta Logado", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Você esta Logado", Toast.LENGTH_SHORT).show();
+        }
+    }
 }
+
