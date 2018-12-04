@@ -1,45 +1,56 @@
 package com.digitalhouse.whatchapp.view;
 
 import android.content.Intent;
-import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 
 import com.digitalhouse.whatchapp.R;
-import com.felipecsl.gifimageview.library.GifImageView;
 
-import org.apache.commons.io.IOUtils;
-
-import java.io.IOException;
-import java.io.InputStream;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class SplashActivity extends AppCompatActivity {
 
-    private GifImageView gifImageView;
+    ImageView whatchapp, oculos, camera, chewbacca;
+    Animation frombottom, fromright, fromtop, fromleft;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        gifImageView = findViewById(R.id.gif_image_view);
+        whatchapp = findViewById(R.id.whatchapp);
+        oculos = findViewById(R.id.oculos);
+        camera = findViewById(R.id.camera);
+        chewbacca = findViewById(R.id.chewbacca);
 
-        try {
-            InputStream inputStream = getAssets().open("giphy.gif");
-            byte[] bytes = IOUtils.toByteArray(inputStream);
-            gifImageView.setBytes(bytes);
-            gifImageView.startAnimation();
-        } catch (IOException ex) {
+        frombottom = AnimationUtils.loadAnimation(this,R.anim.frombottom);
+        fromright = AnimationUtils.loadAnimation(this, R.anim.fromright);
+        fromleft = AnimationUtils.loadAnimation(this, R.anim.fromleft);
+        fromtop = AnimationUtils.loadAnimation(this, R.anim.fromtop);
 
+        whatchapp.setAnimation(frombottom);
+        oculos.setAnimation(fromright);
+        camera.setAnimation(fromleft);
+        chewbacca.setAnimation(fromtop);
 
-        }
-
-        new Handler().postDelayed(new Runnable() {
+        new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                SplashActivity.this.startActivity(new Intent(SplashActivity.this, MainActivity.class));
-                SplashActivity.this.finish();
+                jump(null);
             }
-        }, 3000);
+        },5000);
+
+
+    }
+
+
+    public void  jump (View view){
+        startActivity(new Intent(SplashActivity.this,MainActivity.class));
+        finish();
     }
 }
