@@ -1,6 +1,7 @@
 package com.digitalhouse.whatchapp.view;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -11,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.digitalhouse.whatchapp.BuildConfig;
@@ -27,6 +29,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
 
 public class HomeActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
@@ -126,8 +129,12 @@ public class HomeActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.menu_settings:
                 return true;
+            case R.id.menu_entrar:
+                showLogin();
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    public void showLogin() { startActivity(new Intent(HomeActivity.this, LoginActivity.class));}
 }
