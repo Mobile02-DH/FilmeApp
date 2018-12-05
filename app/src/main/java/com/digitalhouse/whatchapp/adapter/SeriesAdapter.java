@@ -11,42 +11,41 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.digitalhouse.whatchapp.R;
-import com.digitalhouse.whatchapp.model.Movie;
+import com.digitalhouse.whatchapp.model.Series;
 import com.digitalhouse.whatchapp.view.DetailActivity;
 import com.digitalhouse.whatchapp.view.ListaDeAssistidos;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHolder> {
+public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.MyViewHolder> {
 
     private Context mContext;
-    private List<Movie> movieList = new ArrayList<>();
+    private List<Series> seriesList;
 
-    public MoviesAdapter(Context mContext, List<Movie> movieList){
+    public SeriesAdapter(Context mContext, List<Series> seriesList){
         this.mContext = mContext;
-        this.movieList.addAll(movieList);
+        this.seriesList = seriesList;
     }
 
     @Override
-    public MoviesAdapter.MyViewHolder onCreateViewHolder(ViewGroup viewGroup, int i){
+    public SeriesAdapter.MyViewHolder onCreateViewHolder(ViewGroup viewGroup, int i){
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.movie_card, viewGroup, false);
 
-        return new MyViewHolder(view);
+        return new SeriesAdapter.MyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final MoviesAdapter.MyViewHolder viewHolder, int i) {
+    public void onBindViewHolder(final SeriesAdapter.MyViewHolder viewHolder, int i) {
 
-        Movie movie = movieList.get(i);
-        viewHolder.bind(movie);
+        Series series = seriesList.get(i);
+        viewHolder.bind(series);
     }
 
     @Override
     public int getItemCount(){
-        return movieList.size();
+        return seriesList.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
@@ -63,14 +62,14 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
             imageAssistido = view.findViewById(R.id.imageAssistidos);
         }
 
-        public void bind(final Movie movie){
+        public void bind(final Series series){
 
-            Picasso.get().load(movie.getPosterPath())
+            Picasso.get().load(series.getPosterPath())
                     .placeholder(R.drawable.load)
                     .into(thumbnail);
 
-            title.setText(movie.getOriginalTitle());
-            String vote = Double.toString(movie.getVoteAverage());
+            title.setText(series.getName());
+            String vote = Double.toString(series.getVoteAverage());
             userrating.setText(vote);
 
             this.itemView.setOnClickListener(new View.OnClickListener() {
@@ -78,38 +77,27 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
                 public void onClick(View v) {
                     int pos = getAdapterPosition();
                     if (pos != RecyclerView.NO_POSITION){
-                        Movie clickedDataItem = movieList.get(pos);
+                        Series clickedDataItem = seriesList.get(pos);
                         Intent intent = new Intent(mContext, DetailActivity.class);
-                        intent.putExtra("original_title", movieList.get(pos).getOriginalTitle());
-                        intent.putExtra("poster_path", movieList.get(pos).getPosterPath());
-                        intent.putExtra("overview", movieList.get(pos).getOverviews());
-                        intent.putExtra("vote_average", Double.toString(movieList.get(pos).getVoteAverage()));
-                        intent.putExtra("release_date", movieList.get(pos).getReleaseDate());
+                        intent.putExtra("original_title", seriesList.get(pos).getName());
+                        intent.putExtra("poster_path", seriesList.get(pos).getPosterPath());
+                        intent.putExtra("overview", seriesList.get(pos).getOverview());
+                        intent.putExtra("vote_average", Double.toString(seriesList.get(pos).getVoteAverage()));
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         mContext.startActivity(intent);
-                        Toast.makeText(v.getContext(), "Você clicou em " + clickedDataItem.getOriginalTitle(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(v.getContext(), "Você clicou em " + clickedDataItem.getName(), Toast.LENGTH_SHORT).show();
                     }
                 }
             });
-
 
             imageAssistido.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(view.getContext(),ListaDeAssistidos.class);
-                    intent.putExtra("MOVIE", movie);
+                    intent.putExtra("MOVIE", series);
                     view.getContext().startActivity(intent);
                 }
             });
-        }
-    }
-    public void setMovies(List<Movie> movies) {
-        //verificar se o movies já tem informação
-        if (movies.size() == 0) {
-            this.movieList = movies;
-        } else {
-            this.movieList.addAll(movies);
-            notifyDataSetChanged();
         }
     }
 }

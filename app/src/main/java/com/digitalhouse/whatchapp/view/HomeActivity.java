@@ -16,7 +16,6 @@ import android.widget.Toast;
 import com.digitalhouse.whatchapp.BuildConfig;
 import com.digitalhouse.whatchapp.R;
 import com.digitalhouse.whatchapp.adapter.MoviesAdapter;
-import com.digitalhouse.whatchapp.api.Client;
 import com.digitalhouse.whatchapp.api.Service;
 import com.digitalhouse.whatchapp.model.Movie;
 import com.digitalhouse.whatchapp.model.MoviesResponse;
@@ -28,14 +27,17 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.digitalhouse.whatchapp.api.Client.getClient;
+
 public class HomeActivity extends AppCompatActivity {
+    int page = 1;
     private RecyclerView recyclerView;
     private MoviesAdapter adapter;
     private List<Movie> movieList = new ArrayList<>();
     ProgressDialog pd;
     private SwipeRefreshLayout swipeContainer;
     public static final String LOG_TAG = MoviesAdapter.class.getName();
-
+    Service apiService = getClient().create(Service.class);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +65,6 @@ public class HomeActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recycler_view);
 
-
         adapter = new MoviesAdapter(this, movieList);
 
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
@@ -77,7 +78,37 @@ public class HomeActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
 
         loadJSON();
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                verifyIsLast(recyclerView);
+
+            }
+        });
     }
+
+    private void verifyIsLast(RecyclerView recyclerView) {
+        LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+        int totalItemCount = layoutManager.getItemCount();
+        int lastVisible = layoutManager.findLastVisibleItemPosition();
+
+        boolean endHasBeenReached = lastVisible + 5 >= totalItemCount;
+
+        if (totalItemCount > 0 && endHasBeenReached && page <= 10) {
+            //you have reached to the bottom of your recycler view
+            page++;
+            buscarFilmes();
+        }
+    }
+
 
     private void loadJSON() {
 
@@ -87,29 +118,10 @@ public class HomeActivity extends AppCompatActivity {
                 pd.dismiss();
                 return;
             }
-            Client client = new Client();
-            Service apiService =
-                    client.getClient().create(Service.class);
-            Call<MoviesResponse> call = apiService.getPopularMovies(BuildConfig.THE_MOVIE_DB_API_TOKEN);
-            call.enqueue(new Callback<MoviesResponse>() {
-                @Override
-                public void onResponse(Call<MoviesResponse> call, Response<MoviesResponse> response) {
-                    List<Movie> movies = response.body().getResults();
-                    recyclerView.setAdapter(new MoviesAdapter(getApplicationContext(), movies));
-                    recyclerView.smoothScrollToPosition(0);
-                    if (swipeContainer.isRefreshing()) {
-                        swipeContainer.setRefreshing(false);
-                    }
-                    pd.dismiss();
-                }
 
-                @Override
-                public void onFailure(Call<MoviesResponse> call, Throwable t) {
-                    Log.d("Error", t.getMessage());
-                    Toast.makeText(HomeActivity.this, "Error Fetching Data!", Toast.LENGTH_SHORT).show();
+            buscarFilmes();
 
-                }
-            });
+
         } catch (Exception e) {
             Log.d("Error", e.getMessage());
             Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
@@ -130,5 +142,31 @@ public class HomeActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void buscarFilmes() {
+
+        Call<MoviesResponse> call = apiService.getMovies("popular", BuildConfig.THE_MOVIE_DB_API_TOKEN, "pt-BR", page);
+        call.enqueue(new Callback<MoviesResponse>() {
+            @Override
+            public void onResponse(Call<MoviesResponse> call, Response<MoviesResponse> response) {
+                List<Movie> movies = response.body().getResults();
+
+                if (swipeContainer.isRefreshing()) {
+                    swipeContainer.setRefreshing(false);
+                }
+                pd.dismiss();
+
+                adapter.setMovies(movies);
+            }
+
+
+            @Override
+            public void onFailure(Call<MoviesResponse> call, Throwable t) {
+                Log.d("Error", t.getMessage());
+                Toast.makeText(HomeActivity.this, "Error Fetching Data!", Toast.LENGTH_SHORT).show();
+
+            }
+        });
     }
 }
