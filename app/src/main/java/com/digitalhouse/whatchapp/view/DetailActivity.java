@@ -41,7 +41,7 @@ public class DetailActivity extends AppCompatActivity {
             String movieName = getIntent().getExtras().getString("original_title");
             String synopsis = getIntent().getExtras().getString("overview");
             String rating = getIntent().getExtras().getString("vote_average");
-            String dateOfRelease = getIntent().getExtras().getString("realese_date");
+            String dateOfRelease = getIntent().getExtras().getString("release_date");
 
             Picasso.get()
                     .load(thumbnail)
@@ -69,11 +69,11 @@ public class DetailActivity extends AppCompatActivity {
 
 
             boolean isShow = false;
-            int scrollRange = -1;
+            int scrollRange = 0;
 
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                if (scrollRange == -1){
+                if (scrollRange == 0){
                     scrollRange = appBarLayout.getTotalScrollRange();
                 }
                 if (scrollRange + verticalOffset == 0){

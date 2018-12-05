@@ -22,7 +22,6 @@ import android.widget.Toast;
 import com.digitalhouse.whatchapp.BuildConfig;
 import com.digitalhouse.whatchapp.R;
 import com.digitalhouse.whatchapp.adapter.MoviesAdapter;
-import com.digitalhouse.whatchapp.api.Client;
 import com.digitalhouse.whatchapp.api.Service;
 import com.digitalhouse.whatchapp.model.Movie;
 import com.digitalhouse.whatchapp.model.MoviesResponse;
@@ -34,6 +33,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.digitalhouse.whatchapp.api.Client.getClient;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -44,7 +45,8 @@ public class FilmesFragment extends Fragment {
     ProgressDialog pd;
     private SwipeRefreshLayout swipeContainer;
     public static final String LOG_TAG = MoviesAdapter.class.getName();
-
+    int page = 1;
+    Service apiService = getClient().create(Service.class);
 
     public FilmesFragment() {
         // Required empty public constructor
@@ -90,43 +92,35 @@ public class FilmesFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
-        loadJSON();
+        buscarFilmes();
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                verifyIsLast(recyclerView);
+
+            }
+        });
     }
 
-    private void loadJSON() {
+    private void verifyIsLast(RecyclerView recyclerView) {
+        LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+        int totalItemCount = layoutManager.getItemCount();
+        int lastVisible = layoutManager.findLastVisibleItemPosition();
 
-        try {
-            if (BuildConfig.THE_MOVIE_DB_API_TOKEN.isEmpty()) {
-                Toast.makeText(getContext().getApplicationContext(), "Please obtain API Key firstly from themoviedb.org", Toast.LENGTH_SHORT).show();
-                pd.dismiss();
-                return;
-            }
-            Client client = new Client();
-            Service apiService =
-                    client.getClient().create(Service.class);
-            Call<MoviesResponse> call = apiService.getPopularMovies(BuildConfig.THE_MOVIE_DB_API_TOKEN);
-            call.enqueue(new Callback<MoviesResponse>() {
-                @Override
-                public void onResponse(Call<MoviesResponse> call, Response<MoviesResponse> response) {
-                    List<Movie> movies = response.body().getResults();
-                    recyclerView.setAdapter(new MoviesAdapter(getContext().getApplicationContext(), movies));
-                    recyclerView.smoothScrollToPosition(0);
-                    if (swipeContainer.isRefreshing()) {
-                        swipeContainer.setRefreshing(false);
-                    }
-                    pd.dismiss();
-                }
+        boolean endHasBeenReached = lastVisible + 5 >= totalItemCount;
 
-                @Override
-                public void onFailure(Call<MoviesResponse> call, Throwable t) {
-                    Log.d("Error", t.getMessage());
-                    Toast.makeText(getContext(), "Error Fetching Data!", Toast.LENGTH_SHORT).show();
-
-                }
-            });
-        } catch (Exception e) {
-            Log.d("Error", e.getMessage());
-            Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
+        if (totalItemCount > 0 && endHasBeenReached && page <= 10) {
+            //you have reached to the bottom of your recycler view
+            page++;
+            buscarFilmes();
         }
     }
 
@@ -148,6 +142,33 @@ public class FilmesFragment extends Fragment {
         }
     }
 
-    public void showLogin() { startActivity(new Intent(getContext(), LoginActivity.class));}
+    public void showLogin() {
+        startActivity(new Intent(getContext(), LoginActivity.class));
+    }
 
+    private void buscarFilmes() {
+
+        Call<MoviesResponse> call = apiService.getMovies("popular", BuildConfig.THE_MOVIE_DB_API_TOKEN, "pt-BR", page);
+        call.enqueue(new Callback<MoviesResponse>() {
+            @Override
+            public void onResponse(Call<MoviesResponse> call, Response<MoviesResponse> response) {
+                List<Movie> movies = response.body().getResults();
+
+                if (swipeContainer.isRefreshing()) {
+                    swipeContainer.setRefreshing(false);
+                }
+                pd.dismiss();
+
+                adapter.setMovies(movies);
+            }
+
+            @Override
+            public void onFailure(Call<MoviesResponse> call, Throwable t) {
+                Log.d("Error", t.getMessage());
+                Toast.makeText(getContext(), "Error Fetching Data!", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+    }
 }
+

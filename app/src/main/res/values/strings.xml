@@ -1,17 +1,18 @@
 <resources>
     <string name="app_name">WatchApp</string>
     <string name="action_settings">Settings</string>
-    <string name="name_movie">Movie Title</string>
-    <string name="movie_details">Movie Details</string>
-    <string name="plot">Plot Synopsis</string>
-    <string name="rating">User Rating</string>
-    <string name="release">Release Date</string>
+    <string name="name_movie">Titulo</string>
+    <string name="movie_details">Detalhes do Filme</string>
+    <string name="plot">Sinopse</string>
+    <string name="rating">Popularidade</string>
+    <string name="release">Data de Lançamento</string>
     <string name="pref_sort_order_label">Sort Order</string>
     <string name="pref_sort_order_key">sortOrder</string>
     <string name="pref_most_popular">Most Popular</string>
     <string name="pref_highest_rated">Highest Rated</string>
     <string name="title_activity_home">HomeActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="title_activity_series">Series</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>

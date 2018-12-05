@@ -6,12 +6,12 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="movie_title_padding">8dp</dimen>
-    <dimen name="movie_title">16sp</dimen>
+    <dimen name="movie_title">20sp</dimen>
     <dimen name="movie_cover_height">250dp</dimen>
     <dimen name="card_movie_radius">0dp</dimen>
     <dimen name="card_margin">4dp</dimen>
     <dimen name="user_rating_padding_bottom">4dp</dimen>
-    <dimen name="user_rating">12sp</dimen>
+    <dimen name="user_rating">18sp</dimen>
     <dimen name="detail_backdrop_height">300dp</dimen>
     <dimen name="layout_margin_left">16dp</dimen>
     <dimen name="layout_margin_top">3dp</dimen>
