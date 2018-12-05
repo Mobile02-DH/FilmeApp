@@ -25,10 +25,11 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth autenticacao;
 
 
-    private EditText campoNome, campoEmail, campoSenha;
+    private EditText campoEmail, campoSenha;
     private Button botaoEntrar;
     private Usuario usuario;
     private TextView cadastrar;
+
 
 
     @Override
@@ -80,6 +81,16 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    // [START on_start_check_user]
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = ConfiguracaoFirebase.getFirebaseAutenticacao().getCurrentUser();
+        updateUI(currentUser);
+    }
+    // [END on_start_check_user]
+
     private void signIn() {
 
         // [START sign_in_with_email]
@@ -91,6 +102,7 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = ConfiguracaoFirebase.getFirebaseAutenticacao().getCurrentUser();
+                            updateUI(user);
                             startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                             finish();
 
@@ -98,11 +110,39 @@ public class LoginActivity extends AppCompatActivity {
                             // If sign in fails, display a message to the user.
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-
+                            updateUI(null);
                         }
                     }
                 });
         // [END sign_in_with_email]
+    }
+
+    public void getUserProfile() {
+        // [START get_user_profile]
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            // Name, email address, and profile photo Url
+            String name = user.getDisplayName();
+            String email = user.getEmail();
+            //Uri photoUrl = user.getPhotoUrl();
+
+            // Check if user's email is verified
+            //boolean emailVerified = user.isEmailVerified();
+
+            // The user's ID, unique to the Firebase project. Do NOT use this value to
+            // authenticate with your backend server, if you have one. Use
+            // FirebaseUser.getIdToken() instead.
+            String uid = user.getUid();
+        }
+        // [END get_user_profile]
+    }
+
+    public void updateUI(FirebaseUser user) {
+        if (user != null) {
+            Toast.makeText(this, "Você esta Logado", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, "Você não esta Logado", Toast.LENGTH_SHORT).show();
+        }
     }
 }
 

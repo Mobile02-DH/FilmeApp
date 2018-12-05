@@ -25,6 +25,7 @@ public class CadastroActivity extends AppCompatActivity {
     private FirebaseAuth autenticacao;
     private Usuario usuario;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,15 +72,7 @@ public class CadastroActivity extends AppCompatActivity {
         });
     }
 
-    // [START on_start_check_user]
-    @Override
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = ConfiguracaoFirebase.getFirebaseAutenticacao().getCurrentUser();
-        updateUI(currentUser);
-    }
-    // [END on_start_check_user]
+
 
     public void cadastrarUsuario(){
 

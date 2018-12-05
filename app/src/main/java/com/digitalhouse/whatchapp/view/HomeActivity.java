@@ -20,8 +20,10 @@ import com.digitalhouse.whatchapp.R;
 import com.digitalhouse.whatchapp.adapter.MoviesAdapter;
 import com.digitalhouse.whatchapp.api.Client;
 import com.digitalhouse.whatchapp.api.Service;
+import com.digitalhouse.whatchapp.control.ConfiguracaoFirebase;
 import com.digitalhouse.whatchapp.model.Movie;
 import com.digitalhouse.whatchapp.model.MoviesResponse;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -135,6 +137,8 @@ public class HomeActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+
 
     public void showLogin() { startActivity(new Intent(HomeActivity.this, LoginActivity.class));}
 }

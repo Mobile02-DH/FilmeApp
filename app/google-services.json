@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "295141381201-k216u8g4nu42tiikeblj5ggjbpvqoiam.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.digitalhouse.whatchapp",
+            "certificate_hash": "3a58d5980089a69be7f232b02408a9e1faa32a03"
+          }
+        },
+        {
           "client_id": "295141381201-8618ff9iasu88bqe2sbqpa3ekhs10l1m.apps.googleusercontent.com",
           "client_type": 3
         }

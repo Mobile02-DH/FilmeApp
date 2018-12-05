@@ -38,6 +38,8 @@ public class MainActivity extends IntroActivity {
 
     }
 
+
+
     public void showCinema(View view) { startActivity(new Intent(MainActivity.this, HomeActivity.class));}
 
     public void showTv(View view) { startActivity(new Intent(MainActivity.this, HomeActivity.class));}
