@@ -16,6 +16,6 @@
         android:layout_height="wrap_content"
         android:layout_weight="2"
         android:scaleType="fitXY"
-        android:src="@drawable/chewie_watched" />
+        android:src="@drawable/watchapp_logo" />
 
 </LinearLayout>

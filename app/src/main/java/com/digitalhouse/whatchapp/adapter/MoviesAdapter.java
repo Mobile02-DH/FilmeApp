@@ -14,13 +14,9 @@ import com.digitalhouse.whatchapp.R;
 import com.digitalhouse.whatchapp.model.Movie;
 import com.digitalhouse.whatchapp.view.DetailActivity;
 import com.digitalhouse.whatchapp.view.ListaDeAssistidos;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
-
-import static java.security.AccessController.getContext;
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHolder> {
 

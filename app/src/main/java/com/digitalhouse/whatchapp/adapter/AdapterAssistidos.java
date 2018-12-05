@@ -12,7 +12,6 @@ import com.digitalhouse.whatchapp.R;
 import com.digitalhouse.whatchapp.model.Movie;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AdapterAssistidos extends RecyclerView.Adapter<AdapterAssistidos.ViewHolder>{
