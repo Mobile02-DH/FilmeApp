@@ -133,6 +133,8 @@ public class LoginActivity extends AppCompatActivity {
             // authenticate with your backend server, if you have one. Use
             // FirebaseUser.getIdToken() instead.
             String uid = user.getUid();
+
+
         }
         // [END get_user_profile]
     }
