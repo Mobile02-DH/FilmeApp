@@ -23,11 +23,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".view.CadastroActivity" />
-
         <activity android:name=".view.LoginActivity" />
-
         <activity
             android:name=".view.DetailActivity"
             android:label="Movies"
@@ -39,18 +36,24 @@
             android:value=".view.HomeActivity" />
 
         <activity android:name=".view.ListaDeAssistidos" />
-
         <activity android:name=".view.MainActivity" />
-
         <activity
             android:name=".view.HomeActivity"
             android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar"/>
-
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.SeriesActivity"
             android:label="@string/title_activity_series"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".view.CategoriasActivity"
+            android:label="@string/title_activity_categorias"
+            android:parentActivityName=".view.HomeActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.digitalhouse.whatchapp.view.HomeActivity" />
+        </activity>
     </application>
 
 </manifest>

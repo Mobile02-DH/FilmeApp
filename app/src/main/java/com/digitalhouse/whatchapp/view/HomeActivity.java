@@ -1,5 +1,6 @@
 package com.digitalhouse.whatchapp.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -55,6 +56,8 @@ public class HomeActivity extends AppCompatActivity
 
         } else if (id == R.id.item_favoritos) {
 
+        }else if (id == R.id.item_categorias) {
+            startActivity(new Intent(HomeActivity.this, CategoriasActivity.class));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
