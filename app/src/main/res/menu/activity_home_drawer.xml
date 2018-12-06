@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item android:title="Filmes">
+        <menu>
+
+        <item
+            android:id="@+id/item_filmes"
+            android:icon="@drawable/ic_local_movies_black_24dp"
+            android:title="TopFilmes" />
+
+        <item
+            android:id="@+id/item_filme_categoria"
+            android:icon="@drawable/ic_series"
+            android:title="Categorias" />
+        </menu>
+        </item>
+
+        <item android:title="Series">
+        <menu>
+
+        <item
+            android:id="@+id/item_series"
+            android:icon="@drawable/ic_favoritos"
+            android:title="TopSeries" />
+
+        </menu>
+        </item>
+
+        <item
+            android:id="@+id/item_favoritos"
+            android:icon="@drawable/ic_filmes"
+            android:title="Favoritos" />
+
+    </group>
+
+</menu>

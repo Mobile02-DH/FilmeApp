@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "295141381201",
+    "firebase_url": "https://watchapp-22de8.firebaseio.com",
+    "project_id": "watchapp-22de8",
+    "storage_bucket": "watchapp-22de8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:295141381201:android:932729d03c6d16fb",
+        "android_client_info": {
+          "package_name": "com.digitalhouse.whatchapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "295141381201-fj2ksj5hsimi1nsif8ih2jqf4627e8mj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.digitalhouse.whatchapp",
+            "certificate_hash": "6e205ec8bab6170cc3aacc71b5842a8156fc810e"
+          }
+        },
+        {
+          "client_id": "295141381201-8618ff9iasu88bqe2sbqpa3ekhs10l1m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB02p5C0-tuBBVgEoi_naZ0hzbLKr-B91Q"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "295141381201-8618ff9iasu88bqe2sbqpa3ekhs10l1m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
