@@ -6,10 +6,10 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import java.util.List;
 
-public class CategoriasageAdapter  extends FragmentStatePagerAdapter{
+public class CategoriasAdapter extends FragmentStatePagerAdapter{
 
     private List<Fragment> fragments;
-    public CategoriasageAdapter(FragmentManager fm, List<Fragment> fragments) {
+    public CategoriasAdapter(FragmentManager fm, List<Fragment> fragments) {
         super(fm);
         this.fragments = fragments;
     }
