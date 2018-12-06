@@ -68,9 +68,14 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.item_series) {
 
         } else if (id == R.id.item_favoritos) {
+            startActivity(new Intent(HomeActivity.this, DataBase.class));
 
         }else if (id == R.id.item_categorias) {
             startActivity(new Intent(HomeActivity.this, CategoriasActivity.class));
+
+        }else if (id == R.id.item_logar) {
+            startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

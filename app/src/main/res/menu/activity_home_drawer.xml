@@ -24,6 +24,11 @@
             android:icon="@drawable/ic_favoritos"
             android:title="Categorias" />
 
+        <item
+            android:id="@+id/item_logar"
+            android:icon="@drawable/ic_favoritos"
+            android:title="Logar" />
+
     </group>
 
 </menu>
