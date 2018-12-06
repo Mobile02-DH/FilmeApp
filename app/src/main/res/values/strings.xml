@@ -10,9 +10,9 @@
     <string name="pref_sort_order_key">sortOrder</string>
     <string name="pref_most_popular">Most Popular</string>
     <string name="pref_highest_rated">Highest Rated</string>
-    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_activity_home">TopFilmes</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="title_activity_series">Series</string>
+    <string name="title_activity_series">TopSeries</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
@@ -22,9 +22,9 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="api_key">2da4fcd4e4494e431e178153ecc1c321</string>
     <string name="title_activity_categorias">CategoriasActivity</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
-    <string name="tab_text_3">Tab 3</string>
+    <string name="tab_text_1">Em Cartaz</string>
+    <string name="tab_text_2">Proximos Lançamentos</string>
+    <string name="tab_text_3">Melhores Avaliações</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <!--<string name="api_key">2da4fcd4e4494e431e178153ecc1c321</string>-->
 </resources>

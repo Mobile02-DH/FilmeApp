@@ -52,12 +52,14 @@ public class HomeActivity extends AppCompatActivity
 
         if (id == R.id.item_filmes) {
             replaceFragment(new FilmesFragment());
-        } else if (id == R.id.item_series) {
-
-        } else if (id == R.id.item_favoritos) {
-
-        }else if (id == R.id.item_categorias) {
+        } else if (id == R.id.item_filme_categoria) {
             startActivity(new Intent(HomeActivity.this, CategoriasActivity.class));
+
+        } else if (id == R.id.item_series) {
+            startActivity(new Intent(HomeActivity.this, SeriesActivity.class));
+
+        }else if (id == R.id.item_favoritos) {
+            //startActivity(new Intent(HomeActivity.this, CategoriasActivity.class));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
