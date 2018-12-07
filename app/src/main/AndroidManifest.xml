@@ -54,7 +54,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.digitalhouse.whatchapp.view.HomeActivity" />
         </activity>
-        <activity android:name=".view.DataBase"></activity>
+        <activity android:name=".view.DataBase" />
+        <activity android:name=".view.FavoritosActivity"></activity>
     </application>
 
 </manifest>

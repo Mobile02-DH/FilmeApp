@@ -8,7 +8,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.digitalhouse.whatchapp.R;
-import com.firebase.ui.database.FirebaseListAdapter;
+
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -26,11 +27,13 @@ public class DataBase extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_base);
 
-        loginActivity.getUserProfile();
+        /*loginActivity.getUserProfile();
 
         mFirebaseBtn = (Button) findViewById(R.id.edtbuttonDatabase);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        final FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
         mFirebaseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,9 +42,9 @@ public class DataBase extends AppCompatActivity {
                 // 1- Create child in root object
                 //2- Assign some value to the child object
 
-                mDatabase.child("Name").setValue("Assistidos");
+                mDatabase.child(mAuth.getUid()).setValue();
             }
-        });
+        });*/
 
        /* mListView = (ListView) findViewById(R.id.ListView);
 

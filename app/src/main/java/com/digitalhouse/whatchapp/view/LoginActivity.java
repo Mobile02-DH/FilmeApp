@@ -119,7 +119,7 @@ public class LoginActivity extends AppCompatActivity {
 
             // The user's ID, unique to the Firebase project. Do NOT use this value to
             // authenticate with your backend server, if you have one. Use
-            // FirebaseUser.getIdToken() instead.
+            // FirebaseUser.getIdToken() instFzead.
             String uid = user.getUid();
         }
         // [END get_user_profile]
