@@ -14,16 +14,19 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class DataBase extends AppCompatActivity {
 
-    private ListView mListView;
+    //private ListView mListView;
     private Button mFirebaseBtn;
 
     private DatabaseReference mDatabase;
+    private LoginActivity loginActivity;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_base);
+
+        loginActivity.getUserProfile();
 
         mFirebaseBtn = (Button) findViewById(R.id.edtbuttonDatabase);
 

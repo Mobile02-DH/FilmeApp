@@ -37,8 +37,15 @@
 
         <item
             android:id="@+id/item_logar"
-            android:icon="@drawable/ic_favoritos"
+            android:icon="@drawable/ic_pessoa_cinza_24dp"
             android:title="Logar" />
+
+        <item
+            android:id="@+id/item_deslogar"
+            android:icon="@drawable/common_google_signin_btn_icon_dark"
+            android:title="Deslogar" />
+
+
 
     </group>
 

@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.digitalhouse.whatchapp.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -76,11 +77,20 @@ public class HomeActivity extends AppCompatActivity
         }else if (id == R.id.item_logar) {
             startActivity(new Intent(HomeActivity.this, LoginActivity.class));
 
+        } else if (id == R.id.item_deslogar){
+            signOut();
+            Toast.makeText(this, "Deslogado com sucesso", Toast.LENGTH_SHORT).show();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void signOut() {
+        // [START auth_sign_out]
+        FirebaseAuth.getInstance().signOut();
+        // [END auth_sign_out]
     }
 
     public void replaceFragment(Fragment fragment) {

@@ -105,12 +105,6 @@ public class LoginActivity extends AppCompatActivity {
         // [END sign_in_with_email]
     }
 
-    public void signOut() {
-        // [START auth_sign_out]
-        FirebaseAuth.getInstance().signOut();
-        // [END auth_sign_out]
-    }
-
     public void getUserProfile() {
         // [START get_user_profile]
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
