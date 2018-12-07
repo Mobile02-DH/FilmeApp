@@ -100,4 +100,14 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.MyViewHold
             });
         }
     }
+
+    public void setSeries(List<Series> series) {
+        //verificar se o movies já tem informação
+        if (series.size() == 0) {
+            this.seriesList = series;
+        } else {
+            this.seriesList.addAll(series);
+            notifyDataSetChanged();
+        }
+    }
 }

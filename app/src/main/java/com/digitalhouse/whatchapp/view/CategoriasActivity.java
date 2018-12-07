@@ -8,26 +8,27 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.digitalhouse.whatchapp.R;
-import com.digitalhouse.whatchapp.adapter.CategoriasageAdapter;
+import com.digitalhouse.whatchapp.adapter.CategoriasAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CategoriasActivity extends AppCompatActivity {
 
-    private CategoriasageAdapter pagerAdapter;
+    private CategoriasAdapter pagerAdapter;
     private ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar();
         setContentView(R.layout.activity_categorias);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        pagerAdapter = new CategoriasageAdapter(getSupportFragmentManager(), getFragmentsCategorias());
+        pagerAdapter = new CategoriasAdapter(getSupportFragmentManager(), getFragmentsCategorias());
 
 
         mViewPager = (ViewPager) findViewById(R.id.container);
@@ -43,10 +44,9 @@ public class CategoriasActivity extends AppCompatActivity {
     private List<Fragment> getFragmentsCategorias() {
         List<Fragment> fragments = new ArrayList<>();
 
+        fragments.add(CategoriaFragment.newInstance("now_playing"));
+        fragments.add(CategoriaFragment.newInstance("upcoming"));
         fragments.add(CategoriaFragment.newInstance("top_rated"));
-        fragments.add(CategoriaFragment.newInstance("top_rated"));
-        fragments.add(CategoriaFragment.newInstance("top_rated"));
-        fragments.add(CategoriaFragment.newInstance("popular"));
 
         return fragments;
     }

@@ -22,6 +22,6 @@ public interface Service {
             @Path("category") String category,
             @Query("api_key") String apiKey,
             @Query("language") String language,
-            @Query("pag") int page);
+            @Query("page") int page);
 
 }

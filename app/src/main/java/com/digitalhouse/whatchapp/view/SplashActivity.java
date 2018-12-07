@@ -19,7 +19,7 @@ public class SplashActivity extends AppCompatActivity {
     Animation frombottom, fromright, fromtop, fromleft;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
@@ -52,5 +52,6 @@ public class SplashActivity extends AppCompatActivity {
     public void  jump (View view){
         startActivity(new Intent(SplashActivity.this,MainActivity.class));
         finish();
+
     }
 }

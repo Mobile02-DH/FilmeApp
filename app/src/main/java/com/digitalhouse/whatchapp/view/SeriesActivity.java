@@ -1,6 +1,7 @@
 package com.digitalhouse.whatchapp.view;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -21,7 +22,6 @@ import android.widget.Toast;
 import com.digitalhouse.whatchapp.BuildConfig;
 import com.digitalhouse.whatchapp.R;
 import com.digitalhouse.whatchapp.adapter.SeriesAdapter;
-import com.digitalhouse.whatchapp.api.Client;
 import com.digitalhouse.whatchapp.api.Service;
 import com.digitalhouse.whatchapp.model.Series;
 import com.digitalhouse.whatchapp.model.SeriesResponse;
@@ -33,16 +33,20 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.digitalhouse.whatchapp.api.Client.getClient;
+
 public class SeriesActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private int pag =1;
+    int page =1;
     private RecyclerView recyclerView;
     private SeriesAdapter adapter;
     private List<Series> seriesList = new ArrayList<>();
     ProgressDialog pd;
     private SwipeRefreshLayout swipeContainerSeries;
     public static final String LOG_TAG = SeriesAdapter.class.getName();
+    Service apiService = getClient().create(Service.class);
+    String categoria;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +86,6 @@ public class SeriesActivity extends AppCompatActivity
 
             recyclerView = findViewById(R.id.recycler_view_series);
 
-
             adapter = new SeriesAdapter(this, seriesList);
 
             if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
@@ -94,47 +97,23 @@ public class SeriesActivity extends AppCompatActivity
             recyclerView.setItemAnimator(new DefaultItemAnimator());
             recyclerView.setAdapter(adapter);
             adapter.notifyDataSetChanged();
+        buscarSeries();
 
-        loadJSON();
-
-    }
-    private void loadJSON() {
-
-        try {
-            if (BuildConfig.THE_MOVIE_DB_API_TOKEN.isEmpty()) {
-                Toast.makeText(getApplicationContext(), "Please obtain API Key firstly from themoviedb.org", Toast.LENGTH_SHORT).show();
-                pd.dismiss();
-                return;
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
             }
-            Client client = new Client();
-            Service apiService =
-                    client.getClient().create(Service.class);
-            Call<SeriesResponse> call = apiService.getSeries("popular", BuildConfig.THE_MOVIE_DB_API_TOKEN, "pt-BR", pag );
-            call.enqueue(new Callback<SeriesResponse>() {
-                @Override
-                public void onResponse(Call<SeriesResponse> call, Response<SeriesResponse> response) {
-                    List<Series> series = response.body().getResults();
-                    recyclerView.setAdapter(new SeriesAdapter(getApplicationContext(), series));
-                    recyclerView.smoothScrollToPosition(0);
-                    if (swipeContainerSeries.isRefreshing()) {
-                        swipeContainerSeries.setRefreshing(false);
-                    }
-                    pd.dismiss();
-                }
 
-                @Override
-                public void onFailure(Call<SeriesResponse> call, Throwable t) {
-                    Log.d("Error", t.getMessage());
-                    Toast.makeText(SeriesActivity.this, "Error Fetching Data!", Toast.LENGTH_SHORT).show();
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
 
-                }
-            });
-        } catch (Exception e) {
-            Log.d("Error", e.getMessage());
-            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
-        }
+                verifyIsLast(recyclerView);
+
+            }
+        });
     }
-
 
     @Override
     public void onBackPressed() {
@@ -174,22 +153,61 @@ public class SeriesActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.item_filmes) {
+            startActivity(new Intent(SeriesActivity.this, HomeActivity.class));
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.item_filme_categoria) {
+            startActivity(new Intent(SeriesActivity.this, CategoriasActivity.class));
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.item_series) {
+            startActivity(new Intent(SeriesActivity.this, SeriesActivity.class));
 
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        }else if (id == R.id.item_favoritos) {
+           // startActivity(new Intent(SeriesActivity.this, ListaDeAssistidos.class));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    private void buscarSeries() {
+
+        Call<SeriesResponse> call = apiService.getSeries("popular", BuildConfig.THE_MOVIE_DB_API_TOKEN, "pt-BR", page);
+        call.enqueue(new Callback<SeriesResponse>() {
+            @Override
+            public void onResponse(Call<SeriesResponse> call, Response<SeriesResponse> response) {
+                List<Series> series = response.body().getResults();
+
+                if (swipeContainerSeries.isRefreshing()) {
+                    swipeContainerSeries.setRefreshing(false);
+                }
+                pd.dismiss();
+
+                adapter.setSeries(series);
+            }
+
+            @Override
+            public void onFailure(Call<SeriesResponse> call, Throwable t) {
+                Log.d("Error", t.getMessage());
+                Toast.makeText(SeriesActivity.this, "Error Fetching Data!", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+    }
+
+    private void verifyIsLast(RecyclerView recyclerView) {
+        LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+        int totalItemCount = layoutManager.getItemCount();
+        int lastVisible = layoutManager.findLastVisibleItemPosition();
+
+        boolean endHasBeenReached = lastVisible + 5 >= totalItemCount;
+
+        if (totalItemCount > 0 && endHasBeenReached && page <= 10) {
+            //you have reached to the bottom of your recycler view
+            page++;
+            buscarSeries();
+        }
+    }
+
 }
