@@ -6,4 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".view.FavoritosActivity">
 
+    <TextView
+        android:id="@+id/nomeUser"
+        android:layout_width="277dp"
+        android:layout_height="103dp"
+        android:text="TextView"
+        tools:layout_editor_absoluteX="57dp"
+        tools:layout_editor_absoluteY="124dp" />
 </android.support.constraint.ConstraintLayout>
