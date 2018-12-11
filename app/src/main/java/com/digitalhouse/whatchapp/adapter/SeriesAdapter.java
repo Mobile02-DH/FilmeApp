@@ -68,6 +68,7 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.MyViewHold
                     .placeholder(R.drawable.load)
                     .into(thumbnail);
 
+
             title.setText(series.getName());
             String vote = Double.toString(series.getVoteAverage());
             userrating.setText(vote);
