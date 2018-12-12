@@ -108,9 +108,9 @@ public class CadastroActivity extends AppCompatActivity {
     }
     public void updateUI(FirebaseUser user) {
         if (user != null) {
-            Toast.makeText(this, "Você esta Logado", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Você esta Logado", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(this, "Você não esta Logado", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Você não esta Logado", Toast.LENGTH_SHORT).show();
         }
 
     }
