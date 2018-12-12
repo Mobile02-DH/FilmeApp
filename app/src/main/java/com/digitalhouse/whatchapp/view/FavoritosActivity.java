@@ -1,15 +1,22 @@
 package com.digitalhouse.whatchapp.view;
 
+import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.digitalhouse.whatchapp.R;
+import com.digitalhouse.whatchapp.adapter.AdapterAssistidos;
+import com.digitalhouse.whatchapp.model.Movie;
 import com.digitalhouse.whatchapp.model.Usuario;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -19,6 +26,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Comment;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FavoritosActivity extends AppCompatActivity {
 
@@ -39,74 +49,72 @@ public class FavoritosActivity extends AppCompatActivity {
     private Button mCommentButton;
     private RecyclerView mCommentsRecycler;
 
+
+    RecyclerView recyclerFavorito;
+    List<Movie> listaassistidos = new ArrayList<>();
+    private DatabaseReference databaseReference;
+    private FirebaseAuth firebaseAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favoritos);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        databaseReference = FirebaseDatabase.getInstance()
+                .getReference().child(firebaseAuth.getCurrentUser().getUid());
+
+        recyclerFavorito = findViewById(R.id.recyclerAssistidosFavoritos);
+
+        final AdapterAssistidos adapterAssistidos = new AdapterAssistidos(new ArrayList<Movie>());
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+
+        recyclerFavorito.setLayoutManager(linearLayoutManager);
+        recyclerFavorito.setHasFixedSize(true);
+        recyclerFavorito.setAdapter(adapterAssistidos);
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot itemSnapshot : dataSnapshot.getChildren()) {
+                    Movie movie = itemSnapshot.getValue(Movie.class);
+                    //movie.setChave(itemSnapshot.getKey());
+                    listaassistidos.add(movie);
+                }
+                adapterAssistidos.update(listaassistidos);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.w("DATABASE", "loadPost:onCancelled", databaseError.toException());
+            }
+        });
+
+        /*recyclerFavorito.addOnItemTouchListener(new RecyclerItemClickListener(getApplicationContext()
+                , recyclerFavorito, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+
+                Article article = articles.get(position);
+                Intent intent = new Intent(getApplicationContext(),DetalheNewsActivity.class);
+                intent.putExtra("url",article.getUrl());
+                startActivity(intent);
+            }
+
+            @Override
+            public void onLongItemClick(View view, int position) {
+
+            }
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        }));
+
+    }*/
     }
-        // Add value event listener to the post
-        // [START post_value_event_listener]
+}
 
-
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-
-        final FirebaseAuth mAuth = FirebaseAuth.getInstance();
-
-        //mDatabase.child(mAuth.getUid())(movie);
-
-
-        private void postComment () {
-            final String uid = mAuth.getUid();
-            FirebaseDatabase.getInstance().getReference().child(uid)
-                    .addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            // Get user information
-                            Usuario user = dataSnapshot.getValue(Usuario.class);
-                            String authorName = user.getNome();
-
-                            // Create new comment object
-                            mCommentField = findViewById(R.id.nomeUser);
-                            mCommentField.setText(authorName);
-
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-        }
-
-    }
-
-
-    /*private void postComment() {
-
-        final FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        final String uid = mAuth.getUid();
-        FirebaseDatabase.getInstance().getReference().child(uid)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        // Get user information
-                        User user = dataSnapshot.getValue(User.class);
-                        String authorName = user.username;
-
-                        // Create new comment object
-                        String commentText = mCommentField.getText().toString();
-                        Comment comment = new Comment(uid, authorName, commentText);
-
-                        // Push the comment, it will appear in the list
-                        mCommentsReference.push().setValue(comment);
-
-                        // Clear the field
-                        mCommentField.setText(null);
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });*/
 
