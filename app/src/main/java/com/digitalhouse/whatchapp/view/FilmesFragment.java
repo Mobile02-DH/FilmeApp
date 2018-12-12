@@ -69,7 +69,7 @@ public class FilmesFragment extends Fragment {
             @Override
             public void onRefresh() {
                 initViews();
-                Toast.makeText(getContext(), "Filmes Atualizados", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Movies Refreshed", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -78,7 +78,7 @@ public class FilmesFragment extends Fragment {
 
     private void initViews() {
         pd = new ProgressDialog(getContext());
-        pd.setMessage("Buscando Filmes...");
+        pd.setMessage("Fetching movies...");
         pd.setCancelable(false);
         pd.show();
 

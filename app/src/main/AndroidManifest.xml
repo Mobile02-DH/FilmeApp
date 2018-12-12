@@ -36,9 +36,7 @@
             android:value=".view.HomeActivity" />
 
         <activity android:name=".view.ListaDeAssistidos" />
-        <activity android:name=".view.MainActivity"
-            android:theme="@style/FullScreen"
-            />
+        <activity android:name=".view.MainActivity" />
         <activity
             android:name=".view.HomeActivity"
             android:label="@string/title_activity_home"
