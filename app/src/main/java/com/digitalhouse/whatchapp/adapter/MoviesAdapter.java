@@ -14,6 +14,9 @@ import com.digitalhouse.whatchapp.R;
 import com.digitalhouse.whatchapp.model.Movie;
 import com.digitalhouse.whatchapp.view.DetailActivity;
 import com.digitalhouse.whatchapp.view.ListaDeAssistidos;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -96,9 +99,11 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
             imageAssistido.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(view.getContext(),ListaDeAssistidos.class);
-                    intent.putExtra("MOVIE", movie);
-                    view.getContext().startActivity(intent);
+                    DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+
+                    final FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
+                    mDatabase.child(mAuth.getUid()).push().setValue(movie);
                 }
             });
         }

@@ -95,7 +95,7 @@ public class CadastroActivity extends AppCompatActivity {
                     Toast.makeText(CadastroActivity.this, "Sucesso ao cadastrar usuário!", Toast.LENGTH_SHORT).show();
                     FirebaseUser user = ConfiguracaoFirebase.getFirebaseAutenticacao().getCurrentUser();
                     updateUI(user);
-                    startActivity(new Intent(CadastroActivity.this, LoginActivity.class));
+                    startActivity(new Intent(CadastroActivity.this, HomeActivity.class));
                     finish();
                 }else {
                     Toast.makeText(CadastroActivity.this, "Erro ao cadastrar usuário!", Toast.LENGTH_SHORT).show();
@@ -106,13 +106,13 @@ public class CadastroActivity extends AppCompatActivity {
         });
 
     }
-
     public void updateUI(FirebaseUser user) {
         if (user != null) {
-            Toast.makeText(this, "Você não esta Logado", Toast.LENGTH_SHORT).show();
-        } else {
             Toast.makeText(this, "Você esta Logado", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Você não esta Logado", Toast.LENGTH_SHORT).show();
         }
+
     }
 }
 
