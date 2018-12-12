@@ -32,22 +32,7 @@ import java.util.List;
 
 public class FavoritosActivity extends AppCompatActivity {
 
-    private static final String TAG = "PostDetailActivity";
 
-    public static final String EXTRA_POST_KEY = "post_key";
-
-    private DatabaseReference mPostReference;
-    private DatabaseReference mCommentsReference;
-    private ValueEventListener mPostListener;
-    private String mPostKey;
-    //private CommentAdapter mAdapter;
-
-    private TextView mAuthorView;
-    private TextView mTitleView;
-    private TextView mBodyView;
-    private TextView mCommentField;
-    private Button mCommentButton;
-    private RecyclerView mCommentsRecycler;
 
 
     RecyclerView recyclerFavorito;
@@ -64,7 +49,7 @@ public class FavoritosActivity extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance()
                 .getReference().child(firebaseAuth.getCurrentUser().getUid());
 
-        recyclerFavorito = findViewById(R.id.recyclerAssistidosFavoritos);
+        recyclerFavorito = (RecyclerView) findViewById(R.id.recyclerAssistidosFavoritos);
 
         final AdapterAssistidos adapterAssistidos = new AdapterAssistidos(new ArrayList<Movie>());
 
@@ -77,44 +62,19 @@ public class FavoritosActivity extends AppCompatActivity {
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot itemSnapshot : dataSnapshot.getChildren()) {
+                for (DataSnapshot itemSnapshot : dataSnapshot.getChildren())
+                {
                     Movie movie = itemSnapshot.getValue(Movie.class);
-                    //movie.setChave(itemSnapshot.getKey());
                     listaassistidos.add(movie);
                 }
                 adapterAssistidos.update(listaassistidos);
+                adapterAssistidos.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.w("DATABASE", "loadPost:onCancelled", databaseError.toException());
+                Toast.makeText(FavoritosActivity.this, "Erro", Toast.LENGTH_SHORT).show();;
             }
         });
-
-        /*recyclerFavorito.addOnItemTouchListener(new RecyclerItemClickListener(getApplicationContext()
-                , recyclerFavorito, new RecyclerItemClickListener.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-
-                Article article = articles.get(position);
-                Intent intent = new Intent(getApplicationContext(),DetalheNewsActivity.class);
-                intent.putExtra("url",article.getUrl());
-                startActivity(intent);
-            }
-
-            @Override
-            public void onLongItemClick(View view, int position) {
-
-            }
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-            }
-        }));
-
-    }*/
     }
 }
-
-
