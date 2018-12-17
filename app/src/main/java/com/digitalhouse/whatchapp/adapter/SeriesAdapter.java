@@ -3,6 +3,7 @@ package com.digitalhouse.whatchapp.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,7 +86,12 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.MyViewHold
                         intent.putExtra("vote_average", Double.toString(seriesList.get(pos).getVoteAverage()));
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         mContext.startActivity(intent);
-                        Toast.makeText(v.getContext(), "Você clicou em " + clickedDataItem.getName(), Toast.LENGTH_SHORT).show();
+
+                        Toast toast = Toast.makeText(v.getContext(), "" + clickedDataItem.getName()+  "\n"+"Arraste para baixo para ver as informações..", Toast.LENGTH_LONG);
+                        TextView t = (TextView) toast.getView().findViewById(android.R.id.message);
+                        if( t != null) t.setGravity(Gravity.CENTER);
+                        toast.show();
+
                     }
                 }
             });
