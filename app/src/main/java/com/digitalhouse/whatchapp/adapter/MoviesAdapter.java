@@ -133,5 +133,6 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
             this.movieList.addAll(movies);
             notifyDataSetChanged();
         }
+
     }
 }
