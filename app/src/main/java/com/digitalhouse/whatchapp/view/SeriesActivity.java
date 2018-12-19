@@ -25,6 +25,7 @@ import com.digitalhouse.whatchapp.adapter.SeriesAdapter;
 import com.digitalhouse.whatchapp.api.Service;
 import com.digitalhouse.whatchapp.model.Series;
 import com.digitalhouse.whatchapp.model.SeriesResponse;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -163,12 +164,25 @@ public class SeriesActivity extends AppCompatActivity
             startActivity(new Intent(SeriesActivity.this, SeriesActivity.class));
 
         }else if (id == R.id.item_favoritos) {
-           // startActivity(new Intent(SeriesActivity.this, ListaDeAssistidos.class));
+            startActivity(new Intent(SeriesActivity.this, FavoritosActivity.class));
+        }else if (id == R.id.item_logar) {
+            startActivity(new Intent(SeriesActivity.this, LoginActivity.class));
+
+        } else if (id == R.id.item_deslogar){
+            signOut();
+            Toast.makeText(this, "Deslogado com sucesso", Toast.LENGTH_SHORT).show();
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void signOut() {
+        // [START auth_sign_out]
+        FirebaseAuth.getInstance().signOut();
+        // [END auth_sign_out]
     }
 
     private void buscarSeries() {
