@@ -38,7 +38,7 @@ public class AdapterAssistidos extends RecyclerView.Adapter<AdapterAssistidos.Vi
         String vote = Double.toString(listAssistidos.get(position).getVoteAverage());
         holder.userrating.setText(vote);
 
-        Picasso.get().load(listAssistidos.get(position).getPosterPath())
+        Picasso.get().load(listAssistidos.get(position).getPoster())
                 .placeholder(R.drawable.load)
                 .into(holder.thumbnail);
 

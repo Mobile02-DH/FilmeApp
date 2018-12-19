@@ -17,6 +17,6 @@
         android:layout_weight="2"
         android:onClick="showTv"
         android:scaleType="fitXY"
-        android:src="@drawable/tv" />
+        android:src="@drawable/series_reta1" />
 
 </LinearLayout>
