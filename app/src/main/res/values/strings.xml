@@ -26,6 +26,5 @@
     <string name="tab_text_1">Em Cartaz</string>
     <string name="tab_text_2">Proximos Lançamentos</string>
     <string name="tab_text_3">Melhores Avaliações</string>
-    <string name="section_format">Hello World from section: %1$d</string>
-    <!--<string name="api_key">2da4fcd4e4494e431e178153ecc1c321</string>-->
+    <string name="section_format">Hello World from section:</string>
 </resources>
