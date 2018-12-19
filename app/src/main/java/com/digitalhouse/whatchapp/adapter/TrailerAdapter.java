@@ -1,5 +1,6 @@
 package com.digitalhouse.whatchapp.adapter;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -63,14 +64,18 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.MyViewHo
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int pos = getAdapterPosition();
-                    if (pos != RecyclerView.NO_POSITION){
-                        Trailer clickedDataItem = trailerList.get(pos);
-                        String videoId = trailerList.get(pos).getKey();
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:"+videoId));
-                        intent.putExtra("VIDEO_ID", videoId);
-                        mContext.startActivity(intent);
-                        Toast.makeText(mContext, "Você clicou em "+clickedDataItem.getName(), Toast.LENGTH_SHORT).show();
+                    try{
+                        int pos = getAdapterPosition();
+                        if (pos != RecyclerView.NO_POSITION){
+                            Trailer clickedDataItem = trailerList.get(pos);
+                            String videoId = trailerList.get(pos).getKey();
+                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:"+videoId));
+                            intent.putExtra("VIDEO_ID", videoId);
+                            mContext.startActivity(intent);
+                            Toast.makeText(mContext, "Você clicou em "+clickedDataItem.getName(), Toast.LENGTH_SHORT).show();
+                        }
+                    }catch (ActivityNotFoundException e){
+                        Toast.makeText(mContext, "Falha ao abrir video no youtube!", Toast.LENGTH_SHORT).show();
                     }
                 }
             });

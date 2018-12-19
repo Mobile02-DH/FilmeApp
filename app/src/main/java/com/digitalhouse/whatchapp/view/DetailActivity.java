@@ -140,9 +140,11 @@ public class DetailActivity extends AppCompatActivity {
             call.enqueue(new Callback<TrailerResponse>() {
                 @Override
                 public void onResponse(Call<TrailerResponse> call, Response<TrailerResponse> response) {
-                    trailer = response.body().getResults();
-                    recyclerView.setAdapter(new TrailerAdapter(getApplicationContext(), trailer));
-                    recyclerView.smoothScrollToPosition(0);
+                    if (response.body() != null) {
+                        trailer = response.body().getResults();
+                        recyclerView.setAdapter(new TrailerAdapter(getApplicationContext(), trailer));
+                        recyclerView.smoothScrollToPosition(0);
+                    }
                 }
 
                 @Override

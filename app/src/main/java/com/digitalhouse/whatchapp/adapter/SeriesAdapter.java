@@ -80,6 +80,7 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.MyViewHold
                     if (pos != RecyclerView.NO_POSITION){
                         Series clickedDataItem = seriesList.get(pos);
                         Intent intent = new Intent(mContext, DetailActivity.class);
+                        intent.putExtra("id", seriesList.get(pos).getId());
                         intent.putExtra("original_title", seriesList.get(pos).getName());
                         intent.putExtra("poster_path", seriesList.get(pos).getPosterPath());
                         intent.putExtra("overview", seriesList.get(pos).getOverview());
