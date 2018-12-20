@@ -9,15 +9,20 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.digitalhouse.whatchapp.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,13 +78,13 @@ public class HomeActivity extends AppCompatActivity
             startActivity(new Intent(HomeActivity.this, SeriesActivity.class));
 
         }else if (id == R.id.item_favoritos) {
-            startActivity(new Intent(HomeActivity.this, FavoritosActivity.class));
+            verificarFavoritosEstarLogado();
+
         }else if (id == R.id.item_logar) {
             startActivity(new Intent(HomeActivity.this, LoginActivity.class));
 
         } else if (id == R.id.item_deslogar){
             signOut();
-            Toast.makeText(this, "Deslogado com sucesso", Toast.LENGTH_SHORT).show();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -88,10 +93,26 @@ public class HomeActivity extends AppCompatActivity
     }
 
     public void signOut() {
-        // [START auth_sign_out]
-        FirebaseAuth.getInstance().signOut();
-        // [END auth_sign_out]
+        if (user != null) {
+            // [START auth_sign_out]
+            FirebaseAuth.getInstance().signOut();
+            Toast.makeText(this, "Deslogado com sucesso", Toast.LENGTH_LONG).show();
+            // [END auth_sign_out]
+        } else {
+            Toast.makeText(this, "Você não está logado", Toast.LENGTH_LONG).show();
+        }
     }
+
+    public void verificarFavoritosEstarLogado() {
+
+        if (user != null) {
+            startActivity(new Intent(HomeActivity.this, FavoritosActivity.class));
+            } else {
+            Toast.makeText(this, "Faça Login para Acessar os Favoritos", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+        }
+    }
+
 
     public void replaceFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
