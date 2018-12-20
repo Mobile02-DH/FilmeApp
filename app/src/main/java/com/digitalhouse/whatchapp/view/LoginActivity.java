@@ -85,6 +85,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             }
         });
 
+        btnGoogle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signIn();
+            }
+        });
+
         botaoEntrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
