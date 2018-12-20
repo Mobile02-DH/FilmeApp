@@ -122,12 +122,9 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
                     }
                 }
             });
-
-
-
-
         }
     }
+
     public void setMovies(List<Movie> movies) {
         //verificar se o movies já tem informação
         if (movies.size() == 0) {

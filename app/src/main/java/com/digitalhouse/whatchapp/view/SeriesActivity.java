@@ -26,6 +26,7 @@ import com.digitalhouse.whatchapp.api.Service;
 import com.digitalhouse.whatchapp.model.Series;
 import com.digitalhouse.whatchapp.model.SeriesResponse;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +49,9 @@ public class SeriesActivity extends AppCompatActivity
     public static final String LOG_TAG = SeriesAdapter.class.getName();
     Service apiService = getClient().create(Service.class);
     String categoria;
+
+    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -164,14 +168,12 @@ public class SeriesActivity extends AppCompatActivity
             startActivity(new Intent(SeriesActivity.this, SeriesActivity.class));
 
         }else if (id == R.id.item_favoritos) {
-            startActivity(new Intent(SeriesActivity.this, FavoritosActivity.class));
+            verificarFavoritosEstarLogado();
         }else if (id == R.id.item_logar) {
             startActivity(new Intent(SeriesActivity.this, LoginActivity.class));
 
         } else if (id == R.id.item_deslogar){
             signOut();
-            Toast.makeText(this, "Deslogado com sucesso", Toast.LENGTH_SHORT).show();
-
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -180,9 +182,24 @@ public class SeriesActivity extends AppCompatActivity
     }
 
     public void signOut() {
-        // [START auth_sign_out]
-        FirebaseAuth.getInstance().signOut();
-        // [END auth_sign_out]
+        if (user != null) {
+            // [START auth_sign_out]
+            FirebaseAuth.getInstance().signOut();
+            Toast.makeText(this, "Deslogado com sucesso", Toast.LENGTH_LONG).show();
+            // [END auth_sign_out]
+        } else {
+            Toast.makeText(this, "Você não está logado", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void verificarFavoritosEstarLogado() {
+
+        if (user != null) {
+            startActivity(new Intent(SeriesActivity.this, FavoritosActivity.class));
+        } else {
+            Toast.makeText(this, "Faça Login para Acessar os Favoritos", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(SeriesActivity.this, LoginActivity.class));
+        }
     }
 
     private void buscarSeries() {
