@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.digitalhouse.whatchapp.R;
@@ -34,6 +35,7 @@ public class AdapterAssistidos extends RecyclerView.Adapter<AdapterAssistidos.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
+
         holder.title.setText(listAssistidos.get(position).getOriginalTitle());
         String vote = Double.toString(listAssistidos.get(position).getVoteAverage());
         holder.userrating.setText(vote);
@@ -42,6 +44,7 @@ public class AdapterAssistidos extends RecyclerView.Adapter<AdapterAssistidos.Vi
                 .placeholder(R.drawable.load)
                 .into(holder.thumbnail);
 
+        holder.ratingBar.setRating((listAssistidos.get(position).getVoteAverage().floatValue()/2));
     }
 
     @Override
@@ -55,6 +58,7 @@ public class AdapterAssistidos extends RecyclerView.Adapter<AdapterAssistidos.Vi
         public TextView userrating;
         public ImageView thumbnail;
         public ImageView imageAssistido;
+        public RatingBar ratingBar;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -63,6 +67,7 @@ public class AdapterAssistidos extends RecyclerView.Adapter<AdapterAssistidos.Vi
             userrating = itemView.findViewById(R.id.userrating);
             thumbnail = itemView.findViewById(R.id.thumbnail);
             imageAssistido = itemView.findViewById(R.id.imageAssistidos);
+            ratingBar = itemView.findViewById(R.id.rating_star_id);
         }
     }
 

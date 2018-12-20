@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,6 +58,7 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.MyViewHold
         public TextView userrating;
         public ImageView thumbnail;
         public ImageView imageAssistido;
+        public RatingBar ratingBar;
 
         public MyViewHolder(View view){
             super(view);
@@ -64,6 +66,7 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.MyViewHold
             userrating = view.findViewById(R.id.userrating);
             thumbnail = view.findViewById(R.id.thumbnail);
             imageAssistido = view.findViewById(R.id.imageAssistidos);
+            ratingBar = view.findViewById(R.id.rating_star_id);
         }
 
         public void bind(final Series series){
@@ -71,6 +74,8 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.MyViewHold
             Picasso.get().load(series.getPosterPath())
                     .placeholder(R.drawable.load)
                     .into(thumbnail);
+
+            ratingBar.setRating(series.getVoteAverage().floatValue()/2);
 
             title.setText(series.getName());
             String vote = Double.toString(series.getVoteAverage());
