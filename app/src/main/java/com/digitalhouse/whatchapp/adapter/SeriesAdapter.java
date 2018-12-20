@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +16,10 @@ import com.digitalhouse.whatchapp.R;
 import com.digitalhouse.whatchapp.model.Series;
 import com.digitalhouse.whatchapp.view.DetailActivity;
 import com.digitalhouse.whatchapp.view.ListaDeAssistidos;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -54,6 +59,7 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.MyViewHold
         public TextView userrating;
         public ImageView thumbnail;
         public ImageView imageAssistido;
+        public RatingBar ratingBar;
 
         public MyViewHolder(View view){
             super(view);
@@ -61,6 +67,7 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.MyViewHold
             userrating = view.findViewById(R.id.userrating);
             thumbnail = view.findViewById(R.id.thumbnail);
             imageAssistido = view.findViewById(R.id.imageAssistidos);
+            ratingBar = view.findViewById(R.id.rating_star_id);
         }
 
         public void bind(final Series series){
@@ -68,6 +75,8 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.MyViewHold
             Picasso.get().load(series.getPosterPath())
                     .placeholder(R.drawable.load)
                     .into(thumbnail);
+
+            ratingBar.setRating(series.getVoteAverage().floatValue()/2);
 
             title.setText(series.getName());
             String vote = Double.toString(series.getVoteAverage());
@@ -100,11 +109,22 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.MyViewHold
             imageAssistido.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(view.getContext(),ListaDeAssistidos.class);
-                    intent.putExtra("MOVIE", series);
-                    view.getContext().startActivity(intent);
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    if (user != null) {
+
+                        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+
+                        final FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
+                        Toast.makeText(mContext, "Adicionado aos Favoritos", Toast.LENGTH_LONG).show();
+
+                        mDatabase.child(mAuth.getUid()).push().setValue(series);
+                    } else {
+                        Toast.makeText(mContext, "Faça Login para Adicionar aos Favoritos", Toast.LENGTH_LONG).show();
+                    }
                 }
             });
+
         }
     }
 

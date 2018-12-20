@@ -24,7 +24,7 @@
 
         <item
             android:id="@+id/item_series"
-            android:icon="@drawable/ic_filmes"
+            android:icon="@drawable/ic_favoritos"
             android:title="TopSeries" />
 
 
@@ -33,8 +33,20 @@
 
         <item
             android:id="@+id/item_favoritos"
-            android:icon="@drawable/ic_favoritos"
+            android:icon="@drawable/ic_filmes"
             android:title="Favoritos" />
+
+        <item
+            android:id="@+id/item_logar"
+            android:icon="@drawable/ic_pessoa_cinza_24dp"
+            android:title="Logar" />
+
+        <item
+            android:id="@+id/item_deslogar"
+            android:icon="@drawable/ic_exit_to_app_black_24dp"
+            android:title="Deslogar" />
+
+
 
     </group>
 

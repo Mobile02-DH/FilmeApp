@@ -8,12 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.digitalhouse.whatchapp.R;
 import com.digitalhouse.whatchapp.model.Movie;
 import com.digitalhouse.whatchapp.view.DetailActivity;
+import com.digitalhouse.whatchapp.view.ListaDeAssistidos;
+import com.digitalhouse.whatchapp.view.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -58,6 +61,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
         public TextView userrating;
         public ImageView thumbnail;
         public ImageView imageAssistido;
+        public RatingBar ratingBar;
 
         public MyViewHolder(View view){
             super(view);
@@ -65,6 +69,8 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
             userrating = view.findViewById(R.id.userrating);
             thumbnail = view.findViewById(R.id.thumbnail);
             imageAssistido = view.findViewById(R.id.imageAssistidos);
+            ratingBar = view.findViewById(R.id.rating_star_id);
+
         }
 
         public void bind(final Movie movie){
@@ -73,6 +79,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
                     .placeholder(R.drawable.load)
                     .into(thumbnail);
 
+            ratingBar.setRating(movie.getVoteAverage().floatValue()/2);
             title.setText(movie.getTitle());
             String vote = Double.toString(movie.getVoteAverage());
             userrating.setText(vote);
@@ -120,10 +127,6 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
                     }
                 }
             });
-
-
-
-
         }
     }
     public void setMovies(List<Movie> movies) {
@@ -134,6 +137,5 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
             this.movieList.addAll(movies);
             notifyDataSetChanged();
         }
-
     }
 }
