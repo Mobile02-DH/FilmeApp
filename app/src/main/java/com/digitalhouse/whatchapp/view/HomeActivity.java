@@ -10,8 +10,11 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.digitalhouse.whatchapp.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -34,6 +37,17 @@ public class HomeActivity extends AppCompatActivity
         replaceFragment(new FilmesFragment());
     }
 
+    public void checkCurrentUser() {
+        // [START check_current_user]
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            // User is signed in
+        } else {
+            // No user is signed in
+        }
+        // [END check_current_user]
+    }
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -48,6 +62,8 @@ public class HomeActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
+
+
         int id = item.getItemId();
 
         if (id == R.id.item_filmes) {
@@ -59,12 +75,24 @@ public class HomeActivity extends AppCompatActivity
             startActivity(new Intent(HomeActivity.this, SeriesActivity.class));
 
         }else if (id == R.id.item_favoritos) {
-            //startActivity(new Intent(HomeActivity.this, CategoriasActivity.class));
+            startActivity(new Intent(HomeActivity.this, FavoritosActivity.class));
+        }else if (id == R.id.item_logar) {
+            startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+
+        } else if (id == R.id.item_deslogar){
+            signOut();
+            Toast.makeText(this, "Deslogado com sucesso", Toast.LENGTH_SHORT).show();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void signOut() {
+        // [START auth_sign_out]
+        FirebaseAuth.getInstance().signOut();
+        // [END auth_sign_out]
     }
 
     public void replaceFragment(Fragment fragment) {

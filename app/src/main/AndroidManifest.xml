@@ -36,7 +36,9 @@
             android:value=".view.HomeActivity" />
 
         <activity android:name=".view.ListaDeAssistidos" />
-        <activity android:name=".view.MainActivity" />
+        <activity android:name=".view.MainActivity"
+            android:theme="@style/FullScreen"
+            />
         <activity
             android:name=".view.HomeActivity"
             android:label="@string/title_activity_home"
@@ -54,6 +56,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.digitalhouse.whatchapp.view.HomeActivity" />
         </activity>
+        <activity android:name=".view.DataBase" />
+        <activity android:name=".view.FavoritosActivity"></activity>
     </application>
 
 </manifest>

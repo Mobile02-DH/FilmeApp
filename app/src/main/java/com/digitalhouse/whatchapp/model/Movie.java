@@ -38,6 +38,10 @@ public class Movie implements Parcelable {
     @SerializedName("vote_average")
     private Double voteAverage;
 
+    public Movie(){
+
+    }
+
     public Movie (String posterPath, boolean adult, String overview, String releaseDate, List<Integer> genreIds, Integer id,
                   String originalLanguage, String originalTitle, String title, String backdropPath, Double popularity, Integer voteCount,
                   Boolean video, Double voteAverage) {
@@ -106,6 +110,10 @@ public class Movie implements Parcelable {
 
     public String getPosterPath(){
         return "https://image.tmdb.org/t/p/w500" + posterPath;
+    }
+
+    public String getPoster(){
+        return posterPath;
     }
 
     public void setPosterPath (String posterPath){

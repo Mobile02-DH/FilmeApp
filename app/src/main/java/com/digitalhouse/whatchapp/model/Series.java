@@ -22,6 +22,10 @@ public class Series implements Parcelable {
     private Double voteAverage;
     private List<Integer> genreIds = new ArrayList<Integer>();
 
+    public Series(){
+
+    }
+
     public Series (String posterPath, String overview, String releaseDate, List<Integer> genreIds, Integer id,
                   String name, Double voteAverage) {
 

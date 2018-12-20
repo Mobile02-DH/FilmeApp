@@ -19,7 +19,6 @@
             android:icon="@drawable/ic_favoritos"
             android:title="Favoritos" />
 
-
     </group>
 
 </menu>

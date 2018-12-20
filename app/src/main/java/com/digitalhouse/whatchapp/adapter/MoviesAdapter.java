@@ -15,6 +15,11 @@ import com.digitalhouse.whatchapp.R;
 import com.digitalhouse.whatchapp.model.Movie;
 import com.digitalhouse.whatchapp.view.DetailActivity;
 import com.digitalhouse.whatchapp.view.ListaDeAssistidos;
+import com.digitalhouse.whatchapp.view.LoginActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -102,11 +107,25 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
             imageAssistido.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(view.getContext(),ListaDeAssistidos.class);
-                    intent.putExtra("MOVIE", movie);
-                    view.getContext().startActivity(intent);
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    if (user != null) {
+
+                        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+
+                        final FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
+                        Toast.makeText(mContext, "Adicionado aos Favoritos", Toast.LENGTH_LONG).show();
+
+                        mDatabase.child(mAuth.getUid()).push().setValue(movie);
+                    } else {
+                        Toast.makeText(mContext, "Faça Login para Adicionar aos Favoritos", Toast.LENGTH_LONG).show();
+                    }
                 }
             });
+
+
+
+
         }
     }
     public void setMovies(List<Movie> movies) {
